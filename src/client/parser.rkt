@@ -12,6 +12,17 @@
 ;;  <exp> ::= <query-result>
 ;;          | ((<list-of-define-query>) <run-stmt>)
 ;;
+;;  <list-of-define-query> :=
+;;                          | (define-query <symbol> <query>) <list-of-define-query>
+;;
+;;  <run-stmt> ::= (run-query <query>)
+;;               | (run-query (project (<list-of-project-attr>) <query>))
+;;
+;;  <list-of-project-attr> ::=
+;;                           | <project-attr> <list-of-project-attr>
+;;
+;;
+;;
 ;;  <query> ::= <symbol>
 ;;            | (conj <list-of-query>)
 ;;            | (disj <list-of-query>)
@@ -21,20 +32,11 @@
 ;;  <list-of-query> ::=
 ;;                   | <query> <list-of-query>
 ;;
-;;  <val> ::= <string>
-;;
 ;;  <list-of-val> ::=
 ;;                   | <val> <list-of-val>
 ;;
-;;  <list-of-define-query> := 
-;;                          | (define-query <symbol> <query>) <list-of-define-query>
+;;  <val> ::= <string>
 ;;
-;;
-;;  <run-stmt> ::= (run-query <query>)
-;;               | (run-query (project (<list-of-project-attr>) <query>))
-;;
-;;  <list-of-project-attr> ::=
-;;                           | <project-attr> <list-of-project-attr>
 ;;
 ;;
 ;;  <select-attr> ::= pub-date (TODO: move this to run query)
@@ -102,6 +104,7 @@
 )
 
 (define-datatype query query?
+  [qvar (id symbol?)]
   [conj (qlist (list-of query?))]
   [disj (qlist (list-of query?))]
   [select-conj (sattr select-attr?) (val-list (list-of string?))]
@@ -175,6 +178,7 @@
 
 (define (parse exp)
   (match exp
+    [(? symbol? id) (qvar id)]
     [(list defineq-l (list 'run-query (? symbol? qid)))   (defineq-run-var (map parse defineq-l) qid)]
     [(list defineq-l (list 'run-query q))                 (defineq-run-q (map parse defineq-l) (parse q))]
     [(list 'define-query (? symbol? id) q)                (define-query id (parse q))]
@@ -190,16 +194,20 @@
 
 (pretty-print
   (parse
-    '(([define-query query-name
+    '(([define-query func-lambda-church
         (conj (abstract
                 (disj "functional"
                       "lambda calculus"))
               (author (conj "church"))
         )
+      ]
+      [define-query term-klop
+        (conj (abstract
+                (disj "term rewriting"))
+              (author (conj "klop"))
+        )
       ])
-      [run-query (abstract
-                  (disj "functional"
-                        "lambda calculus"))]
+      [run-query (disj func-lambda-church term-church)]
     )
   )
 )
