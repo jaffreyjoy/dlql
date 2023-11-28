@@ -93,10 +93,10 @@
 ;;  citations          
 
 
-(define-datatype q-ast q-ast?
-  [query-result (qres list?)]
+(define-datatype ast ast?
+  ;;; [query-result (qres list?)]
   [defineq-run-q (defs (list-of defineq?)) (run query?)]
-  [defineq-run-var (defs (list-of defineq?)) (run symbol?)]
+  ;;; [defineq-run-var (defs (list-of defineq?)) (run symbol?)]
 )
 
 (define-datatype defineq defineq?
@@ -122,6 +122,22 @@
   [conf-sponsor  (sattr-str-eq string?)]
   [isbn          (sattr-str-eq string?)]
   [doi           (sattr-str-eq string?)]
+)
+
+
+(define (select-attr-str-eq sattr)
+  (cases select-attr sattr
+    [paper-title   (str-eq) str-eq]
+    [pub-title     (str-eq) str-eq]
+    [author        (str-eq) str-eq]
+    [abstract      (str-eq) str-eq]
+    [full-text     (str-eq) str-eq]
+    [conf-location (str-eq) str-eq]
+    [conf-sponsor  (str-eq) str-eq]
+    [isbn          (str-eq) str-eq]
+    [doi           (str-eq) str-eq]
+    [_              (error "not select attr")]
+  )
 )
 
 
@@ -179,7 +195,7 @@
 (define (parse exp)
   (match exp
     [(? symbol? id) (qvar id)]
-    [(list defineq-l (list 'run-query (? symbol? qid)))   (defineq-run-var (map parse defineq-l) qid)]
+    ;;; [(list defineq-l (list 'run-query (? symbol? qid)))   (defineq-run-var (map parse defineq-l) qid)]
     [(list defineq-l (list 'run-query q))                 (defineq-run-q (map parse defineq-l) (parse q))]
     [(list 'define-query (? symbol? id) q)                (define-query id (parse q))]
     [(list 'conj q-l ...)                                 (conj (map parse q-l))]
@@ -190,24 +206,3 @@
   )
 )
 ;;; (trace parse)
-
-
-(pretty-print
-  (parse
-    '(([define-query func-lambda-church
-        (conj (abstract
-                (disj "functional"
-                      "lambda calculus"))
-              (author (conj "church"))
-        )
-      ]
-      [define-query term-klop
-        (conj (abstract
-                (disj "term rewriting"))
-              (author (conj "klop"))
-        )
-      ])
-      [run-query (disj func-lambda-church term-church)]
-    )
-  )
-)
