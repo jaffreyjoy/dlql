@@ -4,6 +4,8 @@
 (require racket/pretty)
 (require "parser.rkt")
 
+(provide (all-defined-out))
+
 (define env (make-hash))
 
 (define (eval-query q-ast)
@@ -72,28 +74,28 @@
 ;;; --------------------------------------------------------------------
 
 
-(let* ([qs '(([define-query func-lambda-church
-              (conj (abstract
-                      (disj "functional"
-                            "lambda calculus"))
-                    (author (conj "church"))
-              )
-            ]
-            [define-query term-klop
-              (conj (abstract
-                      (disj "term rewriting"))
-                    (author (conj "klop"))
-              )
-            ])
-            [run-query (disj func-lambda-church term-klop)]
-          )]
-      [baseurl "https://dl.acm.org/action/doSearch?fillQuickSearch=false&target=advanced&expand=dl&AllField="]
-      [pqs (parse qs)]
-      [eqs (eval-prog pqs)])
-    (pretty-print pqs)
-    (printf "\n\n")
-    (printf eqs)
-    (printf "\n\n")
-    (printf (string-append baseurl eqs))
-    (printf "\n\n")
-)
+;;; (let* ([qs '(([define-query func-lambda-church
+;;;           (conj (abstract
+;;;                   (disj "functional"
+;;;                         "lambda calculus"))
+;;;                 (author (conj "church"))
+;;;           )
+;;;         ]
+;;;         [define-query term-klop
+;;;           (conj (abstract
+;;;                   (disj "term rewriting"))
+;;;                 (author (conj "klop"))
+;;;           )
+;;;         ])
+;;;         [run-query (disj func-lambda-church term-klop)]
+;;;         )]
+;;;     [baseurl "https://dl.acm.org/action/doSearch?fillQuickSearch=false&target=advanced&expand=dl&AllField="]
+;;;     [pqs (parse qs)]
+;;;     [eqs (eval-prog pqs)])
+;;;   (pretty-print pqs)
+;;;   (printf "\n\n")
+;;;   (printf eqs)
+;;;   (printf "\n\n")
+;;;   (printf (string-append baseurl eqs))
+;;;   (printf "\n\n")
+;;; )
