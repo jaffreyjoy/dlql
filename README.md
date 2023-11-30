@@ -38,38 +38,38 @@ An example query would look like:
 ## Grammar
 ### Program Expression
 ```racket
-      ;;  <exp> ::= (<list-of-define-query> <run-stmt>)
-      ;;
-      ;;  <list-of-define-query> := 
-      ;;                          | ((define-query <symbol> <query>) <list-of-define-query>)
-      ;;
-      ;;  <run-stmt> ::= (run-query <query>)
+;;  <exp> ::= ((<list-of-define-query>) <run-stmt>)
+;;
+;;  <list-of-define-query> := 
+;;                          | (define-query <symbol> <query>) <list-of-define-query>
+;;
+;;  <run-stmt> ::= (run-query <query>)
 ```
 ### Query Expression
 ```racket
-      ;;  <query> ::= <symbol>
-      ;;            | (conj <list-of-query>)
-      ;;            | (disj <list-of-query>)
-      ;;            | (<select-attr> (conj <list-of-attr>))
-      ;;            | (<select-attr> (disj <list-of-attr>))
-      ;;
-      ;;  <list-of-query> ::= 
-      ;;                   | (<query> <list-of-query>)
-      ;;
-      ;;  <list-of-attr> ::= 
-      ;;                   | (<attr> <list-of-attr>)
-      ;;
-      ;;  <attr> ::= <string>
+;;  <query> ::= <symbol>
+;;            | (conj (<list-of-query>))
+;;            | (disj (<list-of-query>))
+;;            | (<select-attr> (conj (<list-of-attr>)))
+;;            | (<select-attr> (disj (<list-of-attr>)))
+;;
+;;  <list-of-query> ::= 
+;;                   | <query> <list-of-query>
+;;
+;;  <list-of-attr> ::= 
+;;                   | <attr> <list-of-attr>
+;;
+;;  <attr> ::= <string>
 ```
 ### Select Attributes
 ```racket
-      ;;  <select-attr> ::= paper-title
-      ;;                  | pub-title
-      ;;                  | author
-      ;;                  | abstract
-      ;;                  | full-text
-      ;;                  | conf-location
-      ;;                  | conf-sponsor
-      ;;                  | isbn
-      ;;                  | doi
+;;  <select-attr> ::= paper-title
+;;                  | pub-title
+;;                  | author
+;;                  | abstract
+;;                  | full-text
+;;                  | conf-location
+;;                  | conf-sponsor
+;;                  | isbn
+;;                  | doi
 ```
