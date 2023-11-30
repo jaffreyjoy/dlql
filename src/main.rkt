@@ -7,13 +7,13 @@
 ; raco pkg install http-easy-lib
 ;;; (require net/http-easy)
 
-(define chrome-bin-path "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"")
+(define browser-bin-path "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\"")
 
 
 (define baseurl "https://dl.acm.org/action/doSearch?fillQuickSearch=false&target=advanced&expand=dl&AllField=")
 (define link-to-open (string-append baseurl (eval-prog (parse q))))
 
-(shell-execute #f chrome-bin-path link-to-open
+(shell-execute #f browser-bin-path link-to-open
                (current-directory) 'sw_shownormal)
 
 
