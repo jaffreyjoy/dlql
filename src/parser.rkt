@@ -9,38 +9,30 @@
 
 ;;;  Concrete syntax
 ;;
-;;  <exp> ::= <query-result>
-;;          | ((<list-of-define-query>) <run-stmt>)
+;;  <exp> ::= ((<list-of-define-query>) <run-stmt>)
 ;;
-;;  <list-of-define-query> :=
+;;  <list-of-define-query> := 
 ;;                          | (define-query <symbol> <query>) <list-of-define-query>
 ;;
 ;;  <run-stmt> ::= (run-query <query>)
-;;               | (run-query (project (<list-of-project-attr>) <query>))
-;;
-;;  <list-of-project-attr> ::=
-;;                           | <project-attr> <list-of-project-attr>
-;;
 ;;
 ;;
 ;;  <query> ::= <symbol>
-;;            | (conj <list-of-query>)
-;;            | (disj <list-of-query>)
-;;            | (<select-attr> (conj <list-of-val>)
-;;            | (<select-attr> (disj <list-of-val>)
+;;            | (conj (<list-of-query>))
+;;            | (disj (<list-of-query>))
+;;            | (<select-attr> (conj (<list-of-attr>)))
+;;            | (<select-attr> (disj (<list-of-attr>)))
 ;;
-;;  <list-of-query> ::=
+;;  <list-of-query> ::= 
 ;;                   | <query> <list-of-query>
 ;;
-;;  <list-of-val> ::=
-;;                   | <val> <list-of-val>
+;;  <list-of-attr> ::= 
+;;                   | <attr> <list-of-attr>
 ;;
-;;  <val> ::= <string>
+;;  <attr> ::= <string>
 ;;
 ;;
-;;
-;;  <select-attr> ::= pub-date (TODO: move this to run query)
-;;                  | paper-title
+;;  <select-attr> ::= paper-title
 ;;                  | pub-title
 ;;                  | author
 ;;                  | abstract
@@ -49,24 +41,10 @@
 ;;                  | conf-sponsor
 ;;                  | isbn
 ;;                  | doi
-;;
-;;
-;;  <project-attr> ::= paper-title
-;;                   | authors
-;;                   | issued-in
-;;                   | page-count
-;;                   | pub-date
-;;                   | doi
-;;                   | abstract
-;;                   | citation-count
-;;                   | references
-;;                   | citations
-;;
 
 
 ;;; SELECTION attributes
 ;;
-;;  pub-date           : qparams: AfterMonth, AfterYear, BeforeMonth, BeforeYear
 ;;  { qparam: AllField }
 ;;  paper-title        : Title
 ;;  pub-title          : ContentGroupTitle
@@ -77,20 +55,6 @@
 ;;  conf-sponsor       : ConferenceSponsor
 ;;  isbn               : PubIdSortField
 ;;  doi                : DOI
-
-
-;;; PROJECTION attributes
-;;
-;;  paper-title        
-;;  authors            
-;;  issued-in          
-;;  page-count         
-;;  pub-date           
-;;  doi                
-;;  abstract           
-;;  citation-count     
-;;  references         
-;;  citations          
 
 
 (define-datatype ast ast?
