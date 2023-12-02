@@ -18,6 +18,6 @@
           )
         ]
         )
-        (run-query (disj func-lambda-church term-klop))
+        (run-query (abstract (conj func-lambda-church)))
     )
 )

@@ -164,8 +164,8 @@
     [(list 'define-query (? symbol? id) q)                (define-query id (parse q))]
     [(list 'conj q-l ...)                                 (conj (map parse q-l))]
     [(list 'disj q-l ...)                                 (disj (map parse q-l))]
-    [(list (? sattr-sym? sattr) (list 'conj val-l ...))   (select-conj ((sattr-sym->sattr-type sattr) (sattr-sym->sattr-str sattr)) val-l)]
-    [(list (? sattr-sym? sattr) (list 'disj val-l ...))   (select-disj ((sattr-sym->sattr-type sattr) (sattr-sym->sattr-str sattr)) val-l)]
+    [(list (? sattr-sym? sattr) (list 'conj (? string? val-l) ...))   (select-conj ((sattr-sym->sattr-type sattr) (sattr-sym->sattr-str sattr)) val-l)]
+    [(list (? sattr-sym? sattr) (list 'disj (? string? val-l) ...))   (select-disj ((sattr-sym->sattr-type sattr) (sattr-sym->sattr-str sattr)) val-l)]
     [_ (raise-exec-not-implemented)]
   )
 )
